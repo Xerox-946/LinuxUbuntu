@@ -54,12 +54,12 @@ void master(void)
 	if(0==i)
 	{
 		m_newpassword_view();//新密码界面------------------------------
-		i=m_login_view();
 	}
 	else
 	{
 		m_success_view();
 	}	
+	tfile=fopen("teacher.bin","r+");
 	
 }
 
