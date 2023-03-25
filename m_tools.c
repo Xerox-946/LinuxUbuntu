@@ -9,6 +9,7 @@
 void m_reself_password(void)
 {
 	m_newpassword_view();
+	m_login_view();
 	
 	
 	
@@ -19,12 +20,29 @@ void m_reteacher_password(void)
 	system("clear");
 	tfile=fopen("teacher.bin","r+");
 	
-	printf("\t\t\t请输入要修改密码的教师的工号\n");
-	char d_id[16];
+	printf("请输入要重置密码的教师的工号");
+	char d_id[9];
 	scanf("%s",d_id);
-	printf("\t\t\t请输入新密码");
-	char new_password[7];
-	scanf("%s",new_password);
+	int i=0;
+	char new_password[16]="123457";
+	while(i<tret)
+	{
+		if(strcmp((tarr+i)->tid,d_id)==0)
+		{
+			strcpy((tarr+i)->tpwd,new_password);
+			fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
+			fwrite(tarr+i,sizeof(Teacher),1,tfile);	//两种思路，这种思路是更新到数组里面，然后再写入文件中。增加删除的思路是写入文件中，再更新到数组中。
+			fclose(tfile);				
+			printf("修改成功\n");
+			anykey_continue();
+			return;
+		}
+		i++;
+	}
+	printf("没有找到此教师，请检查工号\n");
+	anykey_continue();
+	
+	/*
 	int i=0;
 	while(i<tret)//结构体作为变量，能否直接赋值或者把另一个结构体的值赋给一个结构体
 	{
@@ -43,8 +61,8 @@ void m_reteacher_password(void)
 	}
 	fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
 	fwrite(tarr+i,sizeof(Teacher),1,tfile);
-	
-	fclose(tfile);
+	*/
+
 	
 	
 }
@@ -57,7 +75,7 @@ void m_add_teacher(void)
 	sprintf(id,"%ld",num);
 	
 	Teacher t={.tpwd="123456"};
-	printf("\t\t\t请依次输入老师性别，姓名\n");
+	printf("请依次输入老师性别，姓名");
 	scanf("%hhu",&t.sex);//这里是否会产生缓存区问题
 	scanf("%s",name);
 	strcpy(t.tid,id);
@@ -67,13 +85,21 @@ void m_add_teacher(void)
 	fclose(tfile);
 	tret++;//================添加两次报错严重,因为数组一开始只有一个结构体的大小
 	tarr=realloc(tarr,sizeof(Teacher)*(tret+1));
+	up_tarr();//添加的时候会对文件内容进行修改，修改则要修改数组。
+	anykey_continue();
 	
 }
 void m_del_teacher(void)
 {
 	system("clear");
 	tfile=fopen("teacher.bin","r+");
-	printf("\t\t\t请输入要删除的教师的工号\n");
+	if(NULL==tfile)
+	{
+		printf("还没有可以删除的教师信息\n");
+		anykey_continue();
+		return;
+	}
+	printf("请输入要删除的教师的工号");
 	char d_id[9];
 	scanf("%s",d_id);
 	int i=0;
@@ -95,61 +121,42 @@ void m_del_teacher(void)
 	fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
 	fwrite(tarr+i,sizeof(Teacher),1,tfile);
 	fclose(tfile);
+	up_tarr();//删除的时候会对文件内容进行修改，修改则要修改数组。
 
 }
 void m_show_workteacher(void)
 {
-	system("clear");
-	tfile=fopen("teacher.bin","r+");
-	
-	int tret1=tret;
-	
-	while(tret1>0)
+	system("clear");//展示不需要对文件进行操作，查看数组即可,但是只有初始化的时候才更新了数组，所以导致这里无法读取数组
+	int i=0;
+	while(tret>0 && i<tret)
 	{
-		fread(tarr+tret1-1,sizeof(Teacher),1,tfile);
-		tret1--;
+		if(((tarr+i)->sex)<10)
+		{
+		printf("老师姓名%s 性别%d 工号%s 密码%s\n",(tarr+i)->tname,(tarr+i)->sex,(tarr+i)->tid,(tarr+i)->tpwd);
+		}
+		i++;
 	}
-	while(tret1<tret)
-	{
-	if(((tarr+tret1)->sex==1) || ((tarr+tret1)->sex==2) || ((tarr+tret1)->sex==3)  || ((tarr+tret1)->sex==4))
-	{
-	
-	printf("\t\t\t%s %d %s %s\n",(tarr+tret1)->tname,(tarr+tret1)->sex,(tarr+tret1)->tid,(tarr+tret1)->tpwd);
-	}
-	tret1++;
-	}
-	fclose(tfile);
 	anykey_continue();
 }
 void m_show_fireteacher(void)
 {
-	//system("clear");
-	tfile=fopen("teacher.bin","r+");
-	
-	int tret1=tret;
-	
-	while(tret1>0)
+	system("clear");
+	int i=0;
+	while(tret>0 && i<tret)
 	{
-		fread(tarr+tret1-1,sizeof(Teacher),1,tfile);
-		tret1--;
+		if(((tarr+i)->sex)>10)
+		{
+		printf("老师姓名%s 性别%d 工号%s 密码%s\n",(tarr+i)->tname,(tarr+i)->sex,(tarr+i)->tid,(tarr+i)->tpwd);
+		}
+		i++;
 	}
-	while(tret1<tret)
-	{
-	if(((tarr+tret1)->sex==11) || ((tarr+tret1)->sex==12))
-	{
-	printf("\t\t\t%s %d %s %s\n",(tarr+tret1)->tname,(tarr+tret1)->sex,(tarr+tret1)->tid,(tarr+tret1)->tpwd);
-	}
-	tret1++;
-	}
-
-	fclose(tfile);
 	anykey_continue();
 }
 void m_open_teacher_count(void)
 {
 	system("clear");
 	tfile=fopen("teacher.bin","r+");
-	printf("\t\t\t请输入要解锁的教师的工号\n");
+	printf("请输入要解锁的教师的工号");
 	char j_id[9];
 	scanf("%s",j_id);
 	int i=0;
@@ -174,5 +181,22 @@ void m_open_teacher_count(void)
 	}
 	fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
 	fwrite(tarr+i,sizeof(Teacher),1,tfile);
+	fclose(tfile);
+}
+
+void up_tarr(void)
+{
+	int i=0;
+	tfile=fopen("teacher.bin","r+");
+	if(NULL==tfile)
+	{
+		perror("fopen");
+		return;
+	}
+	while(i<tret)
+	{
+		fread(tarr+i,sizeof(Teacher),1,tfile);
+		i++;
+	}
 	fclose(tfile);
 }

@@ -14,7 +14,7 @@ void m_init()
 	mfile=fopen("master.bin","a+");
 	if(NULL==mfile)
 	{
-		printf("\t\t\t系统错误");
+		perror("fopen");
 		return;
 	}
 	//printf("\t\t\t%ld\n",ftell(mfile));//测试指针的位置
@@ -27,7 +27,6 @@ void m_init()
 		strcpy(m_m,p_m);	
 		fwrite(p,sizeof(p),1,mfile);		
 		fwrite(p_m,sizeof(p_m),1,mfile);	
-		//printf("\t\t\t%ld\n",ftell(mfile)); 测试指针的位置
 		fclose(mfile);
 		
 	}
@@ -43,27 +42,24 @@ void m_init()
 	
 }
 
-void m_start(void)
+void master(void)
 {
 	m_init();
 	if(mfile==NULL)
 	{
 		return;
 	}
+	
 	int i=m_login_view();
-	if(1==i)
-	{
-		return;
-	}
-	else if(0==i)
+	if(0==i)
 	{
 		m_newpassword_view();//新密码界面------------------------------
 		i=m_login_view();
 	}
-	if(i==2)
+	else
 	{
 		m_success_view();
 	}	
-	printf("已退出");
+	
 }
 

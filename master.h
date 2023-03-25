@@ -3,7 +3,7 @@
 #include<stdio.h>
 
 void m_init(void);
-void m_start(void);
+void master(void);
 char m[6];//账户名
 char m_m[7];//密码
 FILE* mfile;
