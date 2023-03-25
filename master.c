@@ -45,6 +45,7 @@ void m_init()
 
 void m_start(void)
 {
+	m_init();
 	if(mfile==NULL)
 	{
 		return;

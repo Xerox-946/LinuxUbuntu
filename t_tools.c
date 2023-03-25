@@ -2,6 +2,7 @@
 #include <string.h>
 #include "all.h"
 #include "t_tools.h"
+//添加学生
 void add_stu(void){
 	char name[20]={};
 	char sex[5]={};
@@ -31,12 +32,14 @@ void add_stu(void){
 		strcpy(sarr[sret-1].spwd,spwd);
 	}
 }
+//添加单个学生
 void add_one(void){
 	system("clear");
 	add_stu();
 	printf("添加成功!\n");
 	anykey_continue();
 }
+//批量添加学生
 void add_all(void){
 	system("clear");
 	printf("请输入你要添加的学生个数:");
@@ -48,6 +51,7 @@ void add_all(void){
 	printf("添加成功%d条!\n",num);
 	anykey_continue();
 }
+//删除学生
 void del_stu(void){
 	system("clear");
 	char sid[10]={};
@@ -88,7 +92,7 @@ void del_stu(void){
 	anykey_continue();
 	return;
 }
-
+//查找学生通过id
 void find_stu_id(void){
 	system("clear");
 	char sid[10]={};
@@ -108,6 +112,7 @@ void find_stu_id(void){
 	anykey_continue();
 	return;
 }
+//查找学生通过姓名
 void find_stu_name(void){
 	system("clear");
 	char sname[20]={};
@@ -127,6 +132,7 @@ void find_stu_name(void){
 	anykey_continue();
 	return;
 }
+//修改学生基本信息
 void change_stu_basic(void){
 	system("clear");
 	char sid[10]={};
@@ -160,6 +166,7 @@ void change_stu_basic(void){
 	anykey_continue();
 	return;
 }
+//修改学生成绩
 void change_stu_score(void){
 	system("clear");
 	char sid[10]={};
@@ -208,7 +215,7 @@ void change_stu_score(void){
 	anykey_continue();
 	return;
 }
-
+//录入单个学生成绩
 void score_stu_one(void){
 	system("clear");
 	char sid[10]={};
@@ -261,6 +268,7 @@ void score_stu_one(void){
 	anykey_continue();
 	return;
 }
+//批量录入学生成绩
 void score_stu_all(void){
 	system("clear");
 	char upsid[10]={};
@@ -329,7 +337,7 @@ void score_stu_all(void){
 	anykey_continue();
 	return;
 }
-
+//重置学生密码
 void re_stu(void){
 	system("clear");
 	char sid[10]={};
@@ -354,8 +362,14 @@ void re_stu(void){
 	anykey_continue();
 	return;
 }
+//显示所有在校学生
 void all_stu(void){
 	system("clear");
+	if(sret==0){
+		printf("暂无入学学生！\n");
+		anykey_continue();
+		return;
+	}
 	for(int i=0;i<sret;i++){
 		if(sarr[i].sex<10){
 			printf("学生姓名:%s 学号:%s 性别:%s 语文成绩:%.1lf 英语成绩:%.1lf 数学成绩:%.1lf\n",sarr[i].sname,sarr[i].sid,1==sarr[i].sex%2?"男":"女",sarr[i].cn,sarr[i].en,sarr[i].math);
@@ -366,6 +380,11 @@ void all_stu(void){
 }
 void all_unstu(void){
 	system("clear");
+	if(usret==0){
+		printf("暂无退学学生！\n");
+		anykey_continue();
+		return;
+	}
 	for(int i=0;i<sret;i++){
 		if(sarr[i].sex>=10){
 			printf("学生姓名:%s 学号:%s 性别:%s 语文成绩:%.1lf 英语成绩:%.1lf 数学成绩:%.1lf\n",sarr[i].sname,sarr[i].sid,1==sarr[i].sex%2?"男":"女",sarr[i].cn,sarr[i].en,sarr[i].math);
@@ -374,6 +393,7 @@ void all_unstu(void){
 	anykey_continue();
 	return;
 }
+//显示所有退学学生
 int re_teacher_pwd(int num){
 	system("clear");
 	char pwd1[17]={};
