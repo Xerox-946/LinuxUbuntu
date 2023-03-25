@@ -4,6 +4,7 @@
 #include<string.h>
 #include<getch.h>
 #include "all.h"
+#include"s_tools.h"
 
 void show_main(void)
 {
@@ -74,7 +75,8 @@ void show_main(void)
  				}
  				else
  				{
- 					printf("\t\t密码输入有误，您还有%d次机会，请输入：",4-cnt);
+ 					printf("\t\t密码输入有误，您还有%d次机会，请输入：",3-cnt);
+ 					cnt++;
  					scanf("%s",key);		
  				}
  			}
@@ -143,7 +145,7 @@ void show_first(int i)
 	}
 }
 void show_tool(int i)
-{
+{	
 	while(1){
 		system("clear");
 		printf("\t\t%s同学您好！欢迎进入学生成绩查询系统！\n",sarr[i].sname);
@@ -160,8 +162,8 @@ void show_tool(int i)
 		switch(getch())
 		{
 		case 49: search(i); break;
-		case 50:change_pwd();break;
-		case 51:personal_information();break;
+		case 50:change_pwd(i);break;
+		case 51:personal_information(i);break;
 		case 52:return;
 		}
 	}

@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 #include"s_tools.h"
 #include"all.h"
 #include"s_view.h"
@@ -10,23 +12,24 @@ void search(int n)
 	double max_cn=0,max_math=0,max_en=0;
 	double min_cn=200,min_math=200,min_en=200;
 	int cnt=0;
+	Student std[1000]={};
 	for(int i=0;i<sret;i++)
 	{
 		if(sarr[i].sex<3)
-		cnt++;
+		{	
+			std[cnt]=sarr[i];
+			cnt++;
+		}
 	}
 	//计算总分
 	printf("%d\n",cnt);
-	for(int i=0 ;i<cnt;i++)
-	{	
-		for(int j=i;j<sret;j++)
-			if(sarr[j].sex<3)
-			{		
-				score[i]=sarr[i].cn+sarr[i].math+sarr[i].en;
-				sum_cn+=sarr[i].cn;
-				sum_math+=sarr[i].math;
-				sum_en+=sarr[i].en;
-			}
+	for(int j=0 ;j<cnt;j++)
+	{		
+		score[j]=std[j].cn+std[j].math+std[j].en;
+		sum_cn+=std[j].cn;
+		sum_math+=std[j].math;
+		sum_en+=std[j].en;
+			
 	}
 	//排名
 	for(int i=0;i<cnt-1;i++)
@@ -44,42 +47,111 @@ void search(int n)
 	//最高分
 	for(int i=0;i<cnt;i++)
 	{
-		if(sarr[i].cn>max_cn) max_cn=sarr[i].cn;
-		if(sarr[i].math>max_math) max_math=sarr[i].math;
-		if(sarr[i].en>max_en) max_en=sarr[i].en;
+		if(std[i].cn>max_cn) max_cn=std[i].cn;
+		if(std[i].math>max_math) max_math=std[i].math;
+		if(std[i].en>max_en) max_en=std[i].en;
 	}
 	//最低分
 	for(int i=0;i<cnt;i++)
 	{
-		if(sarr[i].cn<min_cn) min_cn=sarr[i].cn;
-		if(sarr[i].math<min_math) min_math=sarr[i].math;
-		if(sarr[i].en<min_en) min_en=sarr[i].en;
+		if(std[i].cn<min_cn) min_cn=std[i].cn;
+		if(std[i].math<min_math) min_math=std[i].math;
+		if(std[i].en<min_en) min_en=std[i].en;
 	}
 	//显示
 	for(int i=0;i<cnt;i++)
 	{
-		printf("%s %s\n",sarr[n],rank[i]);
 		if(0==strcmp(sarr[n].sname,rank[i])) 
 		{
 			system("clear");
-			printf("\t\t\t您的排名是：%d",i);
+			printf("\t\t\t您的排名是：%d\n",i+1);
 			printf("\t\t语文   数学   英语\n");
 			printf("\t最高分：");
-			printf(" %ls   %ls   %ls\n",max_cn,max_math,max_en);
+			printf(" %lf   %lf   %lf\n",max_cn,max_math,max_en);
 			printf("\t最低分：");
-			printf(" %ls   %ls   %ls\n",min_cn,min_math,min_en);
+			printf(" %lf   %lf   %lf\n",min_cn,min_math,min_en);
 			printf("\t平均分：");
-			printf(" %ls   %ls   %ls\n",sum_cn/cnt+1,sum_math/cnt+1,sum_en/cnt+1);
+			printf(" %lf   %lf   %lf\n",sum_cn/cnt,sum_math/cnt,sum_en/cnt);
 			break;
 		}
 	}
 	anykey_continue();
 }
-void change_pwd(void)
+void change_pwd(int n)
 {
-	
+	for(;;)
+	{
+		system("clear");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		printf("\t\t请输入原密码：");
+		char old_key[100]={};
+		scanf("%s",old_key);
+		if(0==strcmp(old_key,sarr[n].spwd))
+		{
+			
+			char new_key[100]={};
+			int judge = 1;
+			while(judge)
+			{
+				system("clear");
+				printf("\n");
+				printf("\n");
+				printf("\n");
+				printf("\n");
+				printf("\t\t请输入新密码：");
+				scanf("%s",new_key);
+				if(strlen(new_key)<16)
+				{
+					printf("\t\t请再次输入确认：");
+					char check_again[100]={};
+					scanf("%s",check_again);
+					if(0==strcmp(new_key,check_again))
+					{
+						strcpy(sarr[n].spwd,new_key);
+						printf("\t\t修改成功！\n");
+						anykey_continue();
+						judge=0;
+					}
+					else
+					{
+						printf("\t\t输入错误，请重新尝试！");
+						anykey_continue();
+					}
+				}
+				else
+				{
+					printf("\n");
+					printf("\n");
+					printf("\n");
+					printf("\n");
+					printf("\t\t密码过长请重新输入！");
+					anykey_continue();
+				}
+			}
+			break;
+		}
+		else
+		{
+			printf("\t\t密码输入错误，请重新尝试！\n");
+			anykey_continue();
+		}
+	}
 }
-void personal_information(void)
+void personal_information(int n)
 {
-	
+	system("clear");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("\t学生姓名:%s\n",sarr[n].sname);
+	printf("\t学号:%s\n",sarr[n].sid);
+	printf("\t性别:%s\n",1==sarr[n].sex%2?"男":"女");
+	printf("\t语文成绩:%.1lf\n",sarr[n].cn);
+	printf("\t英语成绩:%.1lf\n",sarr[n].en);
+	printf("\t数学成绩:%.1lf\n",sarr[n].math);
+	anykey_continue();
 }

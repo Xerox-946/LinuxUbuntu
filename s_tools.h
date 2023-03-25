@@ -2,7 +2,7 @@
 #define S_TOOLS_H
 
 void search(int n);
-void change_pwd(void);
-void personal_information(void);
+void change_pwd(int n);
+void personal_information(int n);
 
 #endif//S_TOOLS_H
