@@ -13,12 +13,17 @@ int t_login(void){
 		printf("请输入教师工号:");
 		fgets(id,10,stdin);
 		control_write(id);
-		for(int i=0;i<tret;i++){
+		for(i=0;i<tret;i++){
 			if(0==strcmp(tarr[i].tid,id)&&tarr[i].sex<3){
 				if(0==strcmp(tarr[i].tpwd,"123456")){
 					printf("您是第一次登录或被重置,密码为123456\n");
+					break;
 				}
+				break;
 			}
+		}
+		if(i==tret){
+			return -1;
 		}
 		printf("请输入密码(最多15位):");
 		fgets(pwd,17,stdin);
@@ -65,13 +70,15 @@ void add_view(void){
 		system("clear");
 		puts("\t\t添加学生信息\n");
 		puts("\t\t  1.单个添加\n");
-		puts("\t\t  2.批量添加\n");
-		puts("\t 	3.退出添加\n");
+		puts("\t\t  2.批量输入添加\n");
+		puts("\t\t  3.批量导入添加\n");
+		puts("\t 	4.退出添加\n");
 		int ch=getch();
 		switch(ch){
 			case '1':add_one();break;
 			case '2':add_all();break;
-			case '3':return;break;
+			case '3':add_all_file();break;
+			case '4':return;break;
 		}
 	}
 }
@@ -114,12 +121,14 @@ void score_view(void){
 		puts("\t\t\t录入学生成绩信息\n");
 		puts("\t\t\t  1.单个录入\n");
 		puts("\t\t\t  2.批量录入\n");
-		puts("\t\t	  3.退出录入\n");
+		puts("\t\t\t  3.批量文件录入\n");
+		puts("\t\t	  4.退出录入\n");
 		int ch=getch();
 		switch(ch){
 			case '1':score_stu_one();break;
 			case '2':score_stu_all();break;
-			case '3':return;break;
+			case '3':score_all_file();break;
+			case '4':return;break;
 		}
 	}
 }

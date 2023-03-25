@@ -18,19 +18,16 @@ void add_stu(void){
 	int sid=1;
 	if(sret==0){
 		sret+=1;
-		strcpy(sarr[sret-1].sname,name);
 		sprintf(sarr[sret-1].sid,"2023000%d",sid);
-		sarr[sret-1].sex=tsex;
-		strcpy(sarr[sret-1].spwd,spwd);
 	}else{
 		sid=atoi(sarr[sret-1].sid)+1;
 		sret++;
 		sarr=realloc(sarr,sizeof(Student)*(sret+1));
 		sprintf(sarr[sret-1].sid,"%d",sid);
-		strcpy(sarr[sret-1].sname,name);
-		sarr[sret-1].sex=tsex;
-		strcpy(sarr[sret-1].spwd,spwd);
 	}
+	strcpy(sarr[sret-1].sname,name);
+	sarr[sret-1].sex=tsex;
+	strcpy(sarr[sret-1].spwd,spwd);
 }
 //添加单个学生
 void add_one(void){
@@ -50,6 +47,55 @@ void add_all(void){
 	}
 	printf("添加成功%d条!\n",num);
 	anykey_continue();
+}
+//批量文件添加学生
+void add_all_file(void){
+	system("clear");
+	FILE* psfile=fopen("student_info.txt","r");
+	if(NULL==psfile){
+		printf("该文件不存在，请先创建!\n");
+		anykey_continue();
+		return;
+	}
+	int ret=0,cnt=0;
+	while(1){
+    char sex[5]={};
+    int sid=1;
+    char spwd[17]="123456";
+    char sname[20]={};
+    ret=fscanf(psfile,"姓名:%s 性别:%s\n",sname,sex);
+		if(ret==-1) break;
+		cnt++;
+    if(sret==0){
+			sret+=1;
+			sprintf(sarr[sret-1].sid,"2023000%d",sid);
+		}else{
+			sid=atoi(sarr[sret-1].sid)+1;
+			sret++;
+			sarr=realloc(sarr,sizeof(Student)*(sret+1));
+			sprintf(sarr[sret-1].sid,"%d",sid);
+		}
+		if(strcmp(sex,"男")){
+			sarr[sret-1].sex=1;
+		}else{
+			sarr[sret-1].sex=2;
+		}
+		strcpy(sarr[sret-1].sname,sname);
+		strcpy(sarr[sret-1].spwd,spwd);
+  }
+  fclose(psfile);
+  if(cnt==0){
+  	printf("文件内没有数据，请先添加数据!\n");
+  	anykey_continue();
+		return;
+  }else{
+  	printf("添加成功，新添加的学生信息数据如下：\n");
+  	for(int i=sret-1;i>=sret-cnt;i--){
+  		printf("学生姓名:%s 学号:%s 性别:%s\n",sarr[i].sname,sarr[i].sid,1==sarr[i].sex%2?"男":"女");
+  	}
+  	anykey_continue();
+		return;
+  }
 }
 //删除学生
 void del_stu(void){
@@ -336,6 +382,49 @@ void score_stu_all(void){
 	printf("学号不存在！\n");
 	anykey_continue();
 	return;
+}
+//批量文件录入学生成绩
+void score_all_file(void){
+	system("clear");
+	printf("批量录入学生成绩，如果不存在学号直接掠过\n");
+	FILE* ssfile=fopen("student_score.txt","r");
+	if(NULL==ssfile){
+		printf("该文件不存在，请先创建!\n");
+		anykey_continue();
+		return;
+	}
+	int ret=0,j=0;
+	int cnt[100010]={};
+	while(1){
+    char sid[17]={};
+    double en=0,cn=0,math=0;
+    ret=fscanf(ssfile,"学号:%s 英语成绩:%lf 语文成绩:%lf 数学成绩:%lf\n",sid,&en,&cn,&math);
+		if(ret==-1) break;
+    for(int i=0;i<sret;i++){
+    	if(0==strcmp(sid,sarr[i].sid)&&sarr[i].sex<10){
+    		cnt[i]++;
+    		sarr[i].en=en;
+    		sarr[i].cn=cn;
+    		sarr[i].math=math;
+    	}
+    }
+    j++;
+  }
+  fclose(ssfile);
+  if(j==0){
+  	printf("文件内没有数据，请先添加数据!\n");
+  	anykey_continue();
+		return;
+  }else{
+  	printf("添加成功，新添加的学生成绩数据如下：\n");
+  	for(int i=0;i<sret;i++){
+  		if(cnt[i]!=0){
+  			printf("学生姓名:%s 学号:%s 性别:%s 语文成绩:%.1lf 英语成绩:%.1lf 数学成绩:%.1lf\n",sarr[i].sname,sarr[i].sid,1==sarr[i].sex%2?"男":"女",sarr[i].cn,sarr[i].en,sarr[i].math);
+  		}
+  	}
+  	anykey_continue();
+		return;
+  }
 }
 //重置学生密码
 void re_stu(void){
