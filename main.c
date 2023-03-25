@@ -1,5 +1,6 @@
 #include "all.h"
 #include "teachers.h"
+#include "students.h"
 #include <getch.h>
 #include "master.h"
 int main(){
