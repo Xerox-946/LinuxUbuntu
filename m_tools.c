@@ -24,7 +24,7 @@ void m_reteacher_password(void)
 	char d_id[9];
 	scanf("%s",d_id);
 	int i=0;
-	char new_password[16]="123457";
+	char new_password[16]="123456";
 	while(i<tret)
 	{
 		if(strcmp((tarr+i)->tid,d_id)==0)
@@ -75,13 +75,19 @@ void m_add_teacher(void)
 	sprintf(id,"%ld",num);
 	
 	Teacher t={.tpwd="123456"};
-	printf("请依次输入老师性别，姓名");
-	scanf("%hhu",&t.sex);//这里是否会产生缓存区问题
+	printf("请依次输入老师姓名，性别(1为男，2为女)");
 	scanf("%s",name);
+	scanf("%hhu",&t.sex);//这里是否会产生缓存区问题
 	strcpy(t.tid,id);
 	strcpy(t.tname,name);
     tfile=fopen("teacher.bin","a+");
+    if(NULL==fopen)
+    {
+    	error("fopen");
+    	return;
+    }
 	fwrite(&t,sizeof(Teacher),1,tfile);
+	printf("添加成功\n");
 	fclose(tfile);
 	tret++;//================添加两次报错严重,因为数组一开始只有一个结构体的大小
 	tarr=realloc(tarr,sizeof(Teacher)*(tret+1));
@@ -114,14 +120,18 @@ void m_del_teacher(void)
 		if(0==strcmp((tarr+i)->tid,d_id))
 		{
 			(tarr+i)->sex=(tarr+i)->sex+10;
-			break;
+			printf("删除成功\n");
+			fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
+			fwrite(tarr+i,sizeof(Teacher),1,tfile);
+			fclose(tfile);
+			up_tarr();//删除的时候会对文件内容进行修改，修改则要修改数组
+			anykey_continue();
+			return;
 		}
 		i++;
 	}
-	fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
-	fwrite(tarr+i,sizeof(Teacher),1,tfile);
-	fclose(tfile);
-	up_tarr();//删除的时候会对文件内容进行修改，修改则要修改数组。
+	printf("没有找到该老师\n");
+	anykey_continue();
 
 }
 void m_show_workteacher(void)
@@ -132,7 +142,10 @@ void m_show_workteacher(void)
 	{
 		if(((tarr+i)->sex)<10)
 		{
-		printf("老师姓名%s 性别%d 工号%s 密码%s\n",(tarr+i)->tname,(tarr+i)->sex,(tarr+i)->tid,(tarr+i)->tpwd);
+			if(((tarr+i)->sex)%2==0)
+				printf("老师姓名:%s 性别:女 工号%s\n",(tarr+i)->tname,(tarr+i)->tid);
+			else
+				printf("老师姓名:%s 性别:男 工号%s\n",(tarr+i)->tname,(tarr+i)->tid);
 		}
 		i++;
 	}
@@ -146,7 +159,7 @@ void m_show_fireteacher(void)
 	{
 		if(((tarr+i)->sex)>10)
 		{
-		printf("老师姓名%s 性别%d 工号%s 密码%s\n",(tarr+i)->tname,(tarr+i)->sex,(tarr+i)->tid,(tarr+i)->tpwd);
+		printf("老师姓名:%s 性别:女 工号%s\n",(tarr+i)->tname,(tarr+i)->tid);
 		}
 		i++;
 	}
@@ -175,13 +188,18 @@ void m_open_teacher_count(void)
 			{
 				(tarr+i)->sex=2;
 			}
-			break;
+			fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
+			fwrite(tarr+i,sizeof(Teacher),1,tfile);
+			fclose(tfile);
+			printf("解锁成功\n");
+			anykey_continue();
+			return;
 		}
 		i++;
 	}
-	fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
-	fwrite(tarr+i,sizeof(Teacher),1,tfile);
-	fclose(tfile);
+	printf("没有此老师\n");
+	anykey_continue();
+	
 }
 
 void up_tarr(void)
