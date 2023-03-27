@@ -24,7 +24,7 @@ void m_reteacher_password(void)
 	char d_id[9];
 	scanf("%s",d_id);
 	int i=0;
-	char new_password[16]="123456";
+	char new_password[16]="123457";
 	while(i<tret)
 	{
 		if(strcmp((tarr+i)->tid,d_id)==0)
@@ -81,7 +81,7 @@ void m_add_teacher(void)
 	strcpy(t.tid,id);
 	strcpy(t.tname,name);
     tfile=fopen("teacher.bin","a+");
-    if(NULL==fopen)
+    if(NULL==tfile)
     {
     	error("fopen");
     	return;
@@ -119,12 +119,19 @@ void m_del_teacher(void)
 	{
 		if(0==strcmp((tarr+i)->tid,d_id))
 		{
-			(tarr+i)->sex=(tarr+i)->sex+10;
-			printf("删除成功\n");
-			fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
-			fwrite(tarr+i,sizeof(Teacher),1,tfile);
-			fclose(tfile);
-			up_tarr();//删除的时候会对文件内容进行修改，修改则要修改数组
+			if((tarr+i)->sex<10)
+			{
+				(tarr+i)->sex=(tarr+i)->sex+10;
+				printf("删除成功\n");
+				fseek(tfile,sizeof(Teacher)*i,SEEK_SET);
+				fwrite(tarr+i,sizeof(Teacher),1,tfile);
+				fclose(tfile);
+				up_tarr();//删除的时候会对文件内容进行修改，修改则要修改数组
+			}
+			else
+			{
+				printf("请检查教师是否不存在或者已经离职");
+			}
 			anykey_continue();
 			return;
 		}
@@ -159,7 +166,10 @@ void m_show_fireteacher(void)
 	{
 		if(((tarr+i)->sex)>10)
 		{
-		printf("老师姓名:%s 性别:女 工号%s\n",(tarr+i)->tname,(tarr+i)->tid);
+			if(((tarr+i)->sex)%2==0)
+				printf("老师姓名:%s 性别:女 工号%s\n",(tarr+i)->tname,(tarr+i)->tid);
+			else
+				printf("老师姓名:%s 性别:男 工号%s\n",(tarr+i)->tname,(tarr+i)->tid);
 		}
 		i++;
 	}
