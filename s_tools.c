@@ -6,6 +6,7 @@
 
 void search(int n)
 {
+	system("clear");
 	double score[1000]={};
 	char rank[1000][20]={};
 	double sum_cn=0,sum_math=0,sum_en=0;
@@ -32,10 +33,10 @@ void search(int n)
 			
 	}
 	//排名
-	for(int i=0;i<cnt-1;i++)
+	for(int i=0;i<cnt;i++)
 	{
 		int max=i;
-		for(int j=i+1;j<cnt;j++)
+		for(int j=i;j<cnt;j++)
 		{
 			if(score[j]>score[max])
 			{
@@ -61,17 +62,18 @@ void search(int n)
 	//显示
 	for(int i=0;i<cnt;i++)
 	{
+		printf("%s %s\n",sarr[n].sname,rank[i]);
 		if(0==strcmp(sarr[n].sname,rank[i])) 
 		{
 			system("clear");
 			printf("\t\t\t您的排名是：%d\n",i+1);
 			printf("\t\t语文   数学   英语\n");
 			printf("\t最高分：");
-			printf(" %lf   %lf   %lf\n",max_cn,max_math,max_en);
+			printf(" %.1lf   %.1lf   %.1lf\n",max_cn,max_math,max_en);
 			printf("\t最低分：");
-			printf(" %lf   %lf   %lf\n",min_cn,min_math,min_en);
+			printf(" %.1lf   %.1lf   %.1lf\n",min_cn,min_math,min_en);
 			printf("\t平均分：");
-			printf(" %lf   %lf   %lf\n",sum_cn/cnt,sum_math/cnt,sum_en/cnt);
+			printf(" %.1lf   %.1lf   %.1lf\n",sum_cn/cnt,sum_math/cnt,sum_en/cnt);
 			break;
 		}
 	}
