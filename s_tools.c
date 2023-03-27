@@ -88,7 +88,7 @@ void change_pwd(int n)
 		printf("\n");
 		printf("\t\t请输入原密码：");
 		char old_key[100]={};
-		scanf("%s",old_key);
+		pwdstr(old_key);
 		if(0==strcmp(old_key,sarr[n].spwd))
 		{
 			
@@ -102,12 +102,12 @@ void change_pwd(int n)
 				printf("\n");
 				printf("\n");
 				printf("\t\t请输入新密码：");
-				scanf("%s",new_key);
+				pwdstr(new_key);
 				if(strlen(new_key)<16)
 				{
-					printf("\t\t请再次输入确认：");
+					printf("\n\t\t请再次输入确认：");
 					char check_again[100]={};
-					scanf("%s",check_again);
+					pwdstr(check_again);
 					if(0==strcmp(new_key,check_again))
 					{
 						strcpy(sarr[n].spwd,new_key);
