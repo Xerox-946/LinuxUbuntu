@@ -123,7 +123,7 @@ void show_first(int i)
 	}
 	else
 	{
-		char new_key2[100];
+		char new_key2[100]={};
 		for(;;)
 		{
 			printf("\n\t\t\t请再次输入密码：");
