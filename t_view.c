@@ -9,7 +9,7 @@ int t_login(void){
 	int i=0;
 	while(count[i]!=3){
 		char id[10]={};
-		char pwd[17]={};
+		char pwd[16]={};
 		printf("请输入教师工号:");
 		fgets(id,10,stdin);
 		control_write(id);
@@ -26,8 +26,7 @@ int t_login(void){
 			return -1;
 		}
 		printf("请输入密码(最多15位):");
-		fgets(pwd,17,stdin);
-		control_write(pwd);
+		pwdstr(pwd);
 		for(i=0;i<tret;i++){
 			if(tarr[i].sex<3&&strcmp(tarr[i].tid,id)==0){
 				count[i]++;
@@ -43,7 +42,7 @@ int t_login(void){
 				return -2;
 			}
 		}
-		printf("登录失败请重新输入\n");
+		printf("\n登录失败请重新输入\n");
 	}
 	tarr[i].sex+=2;
 	return -2;
