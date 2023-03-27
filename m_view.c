@@ -14,8 +14,8 @@ int m_login_view(void)
 	
 	//char m_m[]="123456";//系统中存的密码
 	//char m[]="admin";//系统中存的用户名
-	char my_m[7];//用户名
-	char m_password[7];//输入的密码
+	char my_m[7]={};//用户名
+	char m_password[7]={};//输入的密码
 	
 	
 	char arr2[7]="123456";//判断是否是第一次进入
@@ -30,7 +30,9 @@ int m_login_view(void)
 			fgets(my_m,7,stdin);	
 			control_write(my_m);
 			printf("请输入校长密码");
+			//printf("%s\n",m_password);
 			pwdstr(m_password);
+			printf("%s\n",m_password);
 	
 			if(strcmp(m,my_m)!=0)
 			{
@@ -129,9 +131,9 @@ void m_newpassword_view()
 	printf("请设置新的六位数密码");
 		while(i)
 		{
-			scanf("%s",m_newpassword);
+			pwdstr(m_newpassword);
 			printf("请再输入一遍新的密码");
-			scanf("%s",m_newpassword2);
+			pwdstr(m_newpassword2);
 			if(0==strcmp(m_newpassword2,m_newpassword))
 			{
 				strcpy(m_m,m_newpassword);
