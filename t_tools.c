@@ -129,6 +129,7 @@ void del_stu(void){
 					return;
 				}else{
 					printf("输入不一致请重试！\n");
+					bzero(resid,sizeof(resid));
 					k--;
 				}
 			}while(k);			
