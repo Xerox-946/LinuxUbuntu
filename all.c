@@ -107,4 +107,28 @@ void control_write(char* text){
   }
   text[len-1]='\0';
 }
+//对密码进行加密
+void pwdstr(char* str){
+  int i=0;
+  while(1){
+    char ch=getch();
+    switch(ch){
+      case 127:
+      printf("\b \b");
+      i--;
+      *(str+i)=0;
+      break;
+      case 10:return;break;
+      default:
+        if(i<15){
+          printf("*");
+          *(str+i)=ch;
+          i++;
+        }
+        break;
+    }   
+  }
+}
+
+
 

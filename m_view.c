@@ -14,7 +14,7 @@ int m_login_view(void)
 	
 	//char m_m[]="123456";//系统中存的密码
 	//char m[]="admin";//系统中存的用户名
-	char my_m[6];//用户名
+	char my_m[7];//用户名
 	char m_password[7];//输入的密码
 	
 	
@@ -27,9 +27,10 @@ int m_login_view(void)
 			printf("初始密码是123456\n");
 	
 			printf("请输入校长账户名");
-			scanf("%s",my_m);	
+			fgets(my_m,7,stdin);	
+			control_write(my_m);
 			printf("请输入校长密码");
-			scanf("%s",m_password);
+			pwdstr(m_password);
 	
 			if(strcmp(m,my_m)!=0)
 			{
@@ -52,10 +53,11 @@ int m_login_view(void)
 	else
 	{
 		printf("请输入校长账户名");
-		scanf("%s",my_m);	
-		printf("请输入校长密码");
-		scanf("%s",m_password);
-	
+			fgets(my_m,7,stdin);	//这里要大两个数字，因为回车也会被接收
+			control_write(my_m);
+			printf("请输入校长密码");
+			
+			pwdstr(m_password);
 		if(strcmp(m,my_m)!=0)
 		{
 			printf("账户名有误\n");

@@ -467,6 +467,7 @@ void all_stu(void){
 	anykey_continue();
 	return;
 }
+//显示所有退学学生
 void all_unstu(void){
 	system("clear");
 	if(usret==0){
@@ -482,7 +483,7 @@ void all_unstu(void){
 	anykey_continue();
 	return;
 }
-//显示所有退学学生
+//强制修改教师密码
 int re_teacher_pwd(int num){
 	system("clear");
 	char pwd1[17]={};
@@ -490,22 +491,20 @@ int re_teacher_pwd(int num){
 	printf("强制修改密码!\n");
 	do{
 		printf("请输入新的密码(密码最长不超过15位):");
-		fgets(pwd1,17,stdin);
-		control_write(pwd1);
+		pwdstr(pwd1);
 		if(strcmp(pwd1,"123456")==0){
-			printf("输入密码不可再是123456请重输!\n");
+			printf("\n输入密码不可再是123456请重输!\n");
 			continue;
 		}
-		printf("请再次输入新的密码:");
-		fgets(pwd2,17,stdin);
-		control_write(pwd2);
+		printf("\n请再次输入新的密码:");
+		pwdstr(pwd2);
 		if(strcmp(pwd1,pwd2)==0){
-			printf("修改密码成功!\n");
+			printf("\n修改密码成功!\n");
 			strcpy(tarr[num].tpwd,pwd1);
 			anykey_continue();
 			return num;
 		}else{
-			printf("密码输入不一致!\n");
+			printf("\n密码输入不一致!\n");
 		}
 	}while(1);	
 }
