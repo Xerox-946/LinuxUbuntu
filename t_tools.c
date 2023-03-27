@@ -493,22 +493,19 @@ int re_teacher_pwd(int num){
 		printf("请输入新的密码(密码最长不超过15位):");
 		pwdstr(pwd1);
 		if(strcmp(pwd1,"123456")==0){
-			printf("\n输入密码不可再是123456请重输!\n");
+			printf("输入密码不可再是123456请重输!\n");
+			bzero(pwd1,sizeof(pwd1));
 			continue;
 		}
-<<<<<<< HEAD
-		printf("\n请再次输入新的密码:");
-=======
 		printf("请再次输入新的密码:");
->>>>>>> caefe064b1846372cf8ac92ceaf70dac1955e2d4
 		pwdstr(pwd2);
 		if(strcmp(pwd1,pwd2)==0){
-			printf("\n修改密码成功!\n");
+			printf("修改密码成功!\n");
 			strcpy(tarr[num].tpwd,pwd1);
 			anykey_continue();
 			return num;
 		}else{
-			printf("\n密码输入不一致!\n");
+			printf("密码输入不一致!\n");
 		}
 	}while(1);	
 }

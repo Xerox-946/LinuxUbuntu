@@ -20,6 +20,8 @@ int t_login(void){
 					break;
 				}
 				break;
+			}else if(0==strcmp(tarr[i].tid,id)&&tarr[i].sex<10){
+				return -2;
 			}
 		}
 		if(i==tret){
@@ -42,7 +44,7 @@ int t_login(void){
 				return -2;
 			}
 		}
-		printf("\n登录失败请重新输入\n");
+		printf("登录失败请重新输入\n");
 	}
 	tarr[i].sex+=2;
 	return -2;
