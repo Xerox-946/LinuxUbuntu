@@ -54,11 +54,11 @@ void show_main(void)
 			printf("\n");
 			printf("\n");
  			printf("\t\t\t请输入密码：");
- 			pwdstr(key);
  			int cnt=0;
- 			while(cnt<3)
+ 			while(cnt<4)
  			{
- 				
+ 				pwdstr(key);
+ 				cnt++;
  				if(0==strcmp(key,sarr[i].spwd))
  				{
  					cnt=0;
@@ -75,11 +75,10 @@ void show_main(void)
  							break;
  						}
  				}
- 				else
+ 				else if(cnt<4)
  				{
- 					printf("\t\t密码输入有误，您还有%d次机会，请输入：",3-cnt);
- 					cnt++;
- 					scanf("%s",key);		
+ 					printf("\t\t密码输入有误，您还有%d次机会，请输入：",4-cnt);
+ 					bzero(key,sizeof(key));		
  				}
  			}
  			//帐号上锁
