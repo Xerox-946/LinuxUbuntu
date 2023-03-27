@@ -114,11 +114,13 @@ void pwdstr(char* str){
     char ch=getch();
     switch(ch){
       case 127:
-      printf("\b \b");
-      i--;
-      *(str+i)=0;
+      if(i!=0){
+      	printf("\b \b");
+      	i--;
+      	*(str+i)=0;
+      }
       break;
-      case 10:return;break;
+      case 10:printf("\n");return;break;
       default:
         if(i<15){
           printf("*");
