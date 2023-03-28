@@ -8,12 +8,10 @@
 #include "all.h"
 
 
-//函数之间的衔接----------------------------------
+//函数之间的衔接,用返回值判断是否是第一次进入
 int m_login_view(void)
 {
 	
-	//char m_m[]="123456";//系统中存的密码
-	//char m[]="admin";//系统中存的用户名
 	char my_m[7]={};//用户名
 	char m_password[7]={};//输入的密码
 	
@@ -27,10 +25,9 @@ int m_login_view(void)
 			printf("初始密码是123456\n");
 	
 			printf("请输入校长账户名");
-			fgets(my_m,7,stdin);	
+			fgets(my_m,7,stdin);	//数组长度要比用户名长两个字节，因为在fgets会接收回车键
 			control_write(my_m);
 			printf("请输入校长密码");
-			//printf("%s\n",m_password);
 			pwdstr(m_password);
 			printf("%s\n",m_password);
 	
@@ -55,7 +52,7 @@ int m_login_view(void)
 	else
 	{
 		printf("请输入校长账户名");
-			fgets(my_m,7,stdin);	//这里要大两个数字，因为回车也会被接收
+			fgets(my_m,7,stdin);
 			control_write(my_m);
 			printf("请输入校长密码");
 			
@@ -85,8 +82,7 @@ int m_login_view(void)
 		
 	}
 	
-	//scanf("%s",m_m);
-	//m_login_view();
+
 }
 
 void m_success_view()
@@ -102,7 +98,7 @@ while(1){
 	printf("\t\t\t按6显示所有离职教师\n\n");
 	printf("\t\t\t按7解锁教师帐号\n\n");
 	printf("\t\t\t按8退出登录\n\n");
-//	getch();//这是把回车读入了getch()之中
+
 	int i=getch();
 	switch(i)
 	{
