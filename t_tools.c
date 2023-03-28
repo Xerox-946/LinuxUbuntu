@@ -498,7 +498,6 @@ int re_teacher_pwd(int num){
 			bzero(pwd1,sizeof(pwd1));
 			continue;
 		}
-
 		printf("请再次输入新的密码:");
 		pwdstr(pwd2);
 		if(strcmp(pwd1,pwd2)==0){
@@ -508,6 +507,7 @@ int re_teacher_pwd(int num){
 			return num;
 		}else{
 			printf("密码输入不一致!\n");
+			bzero(pwd2,sizeof(pwd2));
 		}
 	}while(1);	
 }
