@@ -43,8 +43,9 @@ void search(int n)
 				max=j;
 			}
 		}
-		strcpy(rank[i],sarr[max].sname);
+		strcpy(rank[i],sarr[max].sid);
 	}
+	
 	//最高分
 	for(int i=0;i<cnt;i++)
 	{
@@ -62,8 +63,8 @@ void search(int n)
 	//显示
 	for(int i=0;i<cnt;i++)
 	{
-		printf("%s %s\n",sarr[n].sname,rank[i]);
-		if(0==strcmp(sarr[n].sname,rank[i])) 
+		printf("%s %s\n",sarr[n].sid,rank[i]);
+		if(0==strcmp(sarr[n].sid,rank[i])) 
 		{
 			system("clear");
 			printf("\t\t\t您的排名是：%d\n",i+1);
@@ -90,7 +91,7 @@ void change_pwd(int n)
 		printf("\n");
 		printf("\t\t请输入原密码：");
 		char old_key[100]={};
-		pwdstr(old_key);
+		pwdstr(old_key,15);
 		if(0==strcmp(old_key,sarr[n].spwd))
 		{
 			
@@ -104,12 +105,12 @@ void change_pwd(int n)
 				printf("\n");
 				printf("\n");
 				printf("\t\t请输入新密码：");
-				pwdstr(new_key);
+				pwdstr(new_key,15);
 				if(strlen(new_key)<16)
 				{
 					printf("\n\t\t请再次输入确认：");
 					char check_again[100]={};
-					pwdstr(check_again);
+					pwdstr(check_again,15);
 					if(0==strcmp(new_key,check_again))
 					{
 						strcpy(sarr[n].spwd,new_key);

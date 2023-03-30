@@ -1,7 +1,7 @@
 CC=gcc
 BIN=end
 OBJ=main.o all.o teachers.o t_tools.o t_view.o master.o m_tools.o m_view.o students.o s_tools.o s_view.o
-#FLAG=-Wall -Werror
+FLAG=-Wall -Werror
 FLAGD=-Wall -Werror -DDEBUG
 STD=-std=gnu99
 LINK=-lm

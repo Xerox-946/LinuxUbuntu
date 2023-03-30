@@ -57,7 +57,7 @@ void show_main(void)
  			int cnt=0;
  			while(cnt<4)
  			{
- 				pwdstr(key);
+ 				pwdstr(key,15);
  				cnt++;
  				if(0==strcmp(key,sarr[i].spwd))
  				{
@@ -114,7 +114,7 @@ void show_first(int i)
 	char new_key[100]={};
 		int t=0;
 	printf("\t\t\t请输入您的新密码：");
-	pwdstr(new_key);
+	pwdstr(new_key,15);
 	if(strlen(new_key)>14)
 	{
 		printf("\t\t\t密码过长，重新输入：\n");
@@ -126,7 +126,7 @@ void show_first(int i)
 		for(;;)
 		{
 			printf("\n\t\t\t请再次输入密码：");
-			pwdstr(new_key2);
+			pwdstr(new_key2,15);
 			if(0==strcmp(new_key,new_key2))
 			{
 				t++;

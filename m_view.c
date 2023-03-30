@@ -28,8 +28,7 @@ int m_login_view(void)
 			fgets(my_m,7,stdin);	//数组长度要比用户名长两个字节，因为在fgets会接收回车键
 			control_write(my_m);
 			printf("请输入校长密码");
-			pwdstr(m_password);
-			printf("%s\n",m_password);
+			pwdstr(m_password,15);
 	
 			if(strcmp(m,my_m)!=0)
 			{
@@ -56,7 +55,7 @@ int m_login_view(void)
 			control_write(my_m);
 			printf("请输入校长密码");
 			
-			pwdstr(m_password);
+			pwdstr(m_password,15);
 		if(strcmp(m,my_m)!=0)
 		{
 			printf("账户名有误\n");
@@ -120,16 +119,18 @@ while(1){
 
 void m_newpassword_view()
 {
-	char m_newpassword[7];//新密码
-	char m_newpassword2[7];//密码的二次确认
+	char m_newpassword[16]={};//新密码
+	char m_newpassword2[16]={};//密码的二次确认
 	int i=1;
 	system("clear");
 	printf("请设置新的六位数密码");
 		while(i)
 		{
-			pwdstr(m_newpassword);
+			pwdstr(m_newpassword,15);
+			printf("%s\n",m_newpassword);
 			printf("请再输入一遍新的密码");
-			pwdstr(m_newpassword2);
+			pwdstr(m_newpassword2,15);
+			printf("%s\n",m_newpassword2);
 			if(0==strcmp(m_newpassword2,m_newpassword))
 			{
 				strcpy(m_m,m_newpassword);

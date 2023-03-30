@@ -44,5 +44,5 @@ void main_view(void);
 void end(void);
 void anykey_continue(void);
 void control_write(char* text);
-void pwdstr(char* str);
+void pwdstr(char* str,int len);
 #endif//ALL_H

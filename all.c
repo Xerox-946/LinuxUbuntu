@@ -126,7 +126,7 @@ void control_write(char* text){
   text[len-1]='\0';
 }
 //对密码进行加密
-void pwdstr(char* str){
+void pwdstr(char* str,int len){
   int i=0;
   while(1){
     char ch=getch();
@@ -140,7 +140,7 @@ void pwdstr(char* str){
       	break;
       case 10:printf("\n");return;break;
       default:
-        if(i<15){
+        if(i<len){
           printf("*");
           *(str+i)=ch;
           i++;

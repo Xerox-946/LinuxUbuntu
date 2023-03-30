@@ -28,7 +28,7 @@ int t_login(void){
 			return -1;
 		}
 		printf("请输入密码(最多15位):");
-		pwdstr(pwd);
+		pwdstr(pwd,15);
 		for(i=0;i<tret;i++){
 			if(tarr[i].sex<3&&strcmp(tarr[i].tid,id)==0){
 				count[i]++;
