@@ -59,6 +59,9 @@ void init(void){
     usret+=i;
     usarr=realloc(usarr,sizeof(Student)*(usret+1));
 	}while(i);
+	fclose(tfile);
+	fclose(sfile);
+	fclose(usfile);
 }
 void main_view(void){
 	system("clear");
@@ -71,6 +74,21 @@ void main_view(void){
 }
 void end(void){
 	debug("%s\n",__func__);
+	tfile=fopen("teacher.bin","r+");
+  if(NULL==tfile){
+  	perror("fopen");
+    return;
+  }
+  sfile=fopen("student.bin","r+");
+  if(NULL==sfile){
+  	perror("fopen");
+    return;
+  }
+  usfile=fopen("unstudent.bin","r+");
+  if(NULL==usfile){
+  	perror("fopen");
+    return;
+  }
 	rewind(tfile);
 	rewind(sfile);
 	rewind(usfile);
@@ -114,12 +132,12 @@ void pwdstr(char* str){
     char ch=getch();
     switch(ch){
       case 127:
-      if(i!=0){
-      	printf("\b \b");
-      	i--;
-      	*(str+i)=0;
-      }
-      break;
+      	if(i!=0){
+      		printf("\b \b");
+      		i--;
+      		*(str+i)=0;
+      	}
+      	break;
       case 10:printf("\n");return;break;
       default:
         if(i<15){

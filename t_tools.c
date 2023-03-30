@@ -4,12 +4,16 @@
 #include "t_tools.h"
 //添加学生
 void add_stu(void){
-	char name[20]={};
+	char name[22]={};
 	char sex[5]={};
 	char spwd[17]="123456";
 	char tsex=0;
-	printf("请输入学生姓名、性别:");
-	scanf("%s %s",name,sex);
+	printf("请输入学生姓名(输入过长只接收前20个字符):");
+	fgets(name,22,stdin);
+	control_write(name);
+	printf("请输入学生姓别:");
+	fgets(sex,5,stdin);
+	control_write(sex);
 	if(0==strcmp(sex,"男")){
 		tsex=1;
 	}else{
