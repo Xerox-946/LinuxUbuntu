@@ -22,7 +22,8 @@ void m_reteacher_password(void)
 	
 	printf("请输入要重置密码的教师的工号");
 	char d_id[9];
-	scanf("%s",d_id);
+	fgets(d_id,11,stdin);
+	control_write(d_id);
 	int i=0;
 	char new_password[16]="123456";
 	while(i<tret)
@@ -47,13 +48,15 @@ void m_add_teacher(void)
 {
 	system("clear");
 	char name[20];
-	char id[16];
+	char id[9];
 	long num=20190000+tret;
 	sprintf(id,"%ld",num);
 	
 	Teacher t={.tpwd="123456"};
-	printf("请依次输入老师姓名，性别(1为男，2为女)");
-	scanf("%s",name);
+	printf("请依次输入老师姓名");
+	fgets(name,21,stdin);
+	control_write(name);
+	printf("请输入性别，性别(1为男，2为女)");
 	scanf("%hhu",&t.sex);
 	strcpy(t.tid,id);
 	strcpy(t.tname,name);
@@ -84,7 +87,8 @@ void m_del_teacher(void)
 	}
 	printf("请输入要删除的教师的工号");
 	char d_id[9];
-	scanf("%s",d_id);
+	fgets(d_id,10,stdin);
+	control_write(d_id);
 	int i=0;
 	while(i<tret)
 	{
